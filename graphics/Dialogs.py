@@ -12,6 +12,7 @@ from graphics.Extra import Center
 from code.Objects import Sesion
 from code.Crypto import getHash
 from code.Crypto import cryptInfo
+from code.Generator import generatorClave
 
 
 class dialogSesion:
@@ -86,8 +87,16 @@ class dialogSetSesion:
         self.passwordEntry.pack(padx=15, pady=5)
         self.passwordEntry.focus_set()
 
+        botonGenerate = Button(self.ventana, text='Generar contraseña', command=self.pressGenerate).pack(pady=5)
         botonAceptar = Button(self.ventana, text='Crear', command=self.pressCreate).pack(pady=5)
         botonCancelar = Button(self.ventana, text='Cancelar', command=self.pressCancelar).pack(pady=5)
+
+    def pressGenerate(self, event=None):
+        d = dialogGenerator(self.ventana)
+        self.ventana.wait_window(d.ventana)
+        self.password.set('')
+        self.password.set(d.password.get())
+        print(self.password.get())
 
     def pressCreate(self, event=None):
         setSesion(self.name.get(), self.password.get())
@@ -221,4 +230,41 @@ class dialogCryptPass:
         botonOk = Button(self.ventana, text='Ok', command=self.pressOk).pack(pady=5)
 
     def pressOk(self, event=None):
+        self.ventana.destroy()
+
+
+class dialogGenerator:
+    def __init__(self, padre):
+
+        self.ventana = Toplevel(padre)
+        self.ventana.transient(padre)
+        Center(self.ventana)
+
+        self.ventana.bind('<Return>', self.pressOk)
+        self.ventana.bind('<Escape>', self.pressOk)
+
+        self.password = StringVar()
+        self.n = IntVar()
+        self.l = IntVar()
+        self.s = IntVar()
+
+        Label(self.ventana, text='Contraseña').pack()
+        self.passwordEntry = Entry(self.ventana, text=self.password)
+        self.passwordEntry.pack(padx=15, pady=5)
+        self.passwordEntry.focus_set()
+
+        self.numeros = Checkbutton(self.ventana, text='Números', variable=self.n).pack()
+        self.letras = Checkbutton(self.ventana, text='Letras', variable=self.l).pack()
+        self.special = Checkbutton(self.ventana, text='Caracteres especiales', variable=self.s).pack()
+        self.long = Spinbox(self.ventana, from_=4, to=64)
+        self.long.pack()
+
+        botonGenerate = Button(self.ventana, text='Generar', command=self.pressGenerate).pack(pady=5)
+        botonOk = Button(self.ventana, text='Ok', command=self.pressOk).pack(pady=5)
+
+    def pressGenerate(self):
+        self.password.set('')
+        self.password.set(generatorClave(self.n.get(), self.l.get(), self.s.get(), self.long.get()))
+
+    def pressOk(self):
         self.ventana.destroy()
