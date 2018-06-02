@@ -52,12 +52,30 @@ def setData(name, algorithm, property, password, notes, site, username, mail, fi
 
 def getData(property):
     cursor = c.cursor()
-    cursor.execute('select id,name,version,algorithm,site,username,mail from secrets where property=%s and property=%s',
+    cursor.execute('select id,name,version,algorithm,site,username,mail,notes from secrets where property=%s and property=%s',
                    (property, property))
 
     data = cursor.fetchall()
 
     return data
+    cursor.close()
+
+
+def getDataById(property, id):
+    cursor = c.cursor()
+    cursor.execute('select id,name,version,algorithm,site,username,mail,notes from secrets where property=%s and id=%s',
+                   (property, id))
+
+    data = cursor.fetchone()
+
+    return data
+    cursor.close()
+
+
+def updateData(name, version, algorithm, password, site, username, mail, file, cryptpass, notes, property, id):
+    cursor = c.cursor()
+    args = (name, version, algorithm, password, site, username, mail, file, cryptpass, notes, property, id)
+    cursor.execute('update secrets set name=%s,version=%s,algorithm=%s,hash=%s,site=%s,username=%s,mail=%s,crypt=%s,cryptpass=%s,notes=%s where property=%s and id=%s ', args)
     cursor.close()
 
 

@@ -48,12 +48,12 @@ if ss is not False:
         #cifrar(b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\x9d(\x9e[EX\xc8\xd5\xbfI{\xa2$\x05(\xd5\x18', archivo.name)
 
         # Envío el propiertario, el padre, el nombre de archivo y el archivo
-        d = dialogSetData(ss, root, archivo.name, file)
+        d = dialogSetData(ss, root, archivo.name, file, None)
         root.wait_window(d.ventana)
         treeRefresh()
 
     def pressCryptInfo():
-        d = dialogSetData(ss, root, '', None)
+        d = dialogSetData(ss, root, '', None, None)
         root.wait_window(d.ventana)
         treeRefresh()
 
@@ -88,6 +88,14 @@ if ss is not False:
             messagebox.showwarning('No decrypt', 'No decrypt')
         treeRefresh()
 
+    def pressUpdate():
+        selectedItem = tree.tree.focus()
+        id = tree.tree.item(selectedItem)['text']
+        name = tree.tree.item(selectedItem)['values'][0]
+        d = dialogSetData(ss, root, '', None, id)
+        root.wait_window(d.ventana)
+        treeRefresh()
+
     def pressDelete():
         selectedItem = tree.tree.focus()
         id = tree.tree.item(selectedItem)['text']
@@ -107,8 +115,8 @@ if ss is not False:
                                                                                                      padx=10, pady=30)
     botonCryptInfo = Button(botones, text="Cifrar info", fg='green', command=pressCryptInfo).pack(side='left', padx=10,
                                                                                                   pady=30)
-    btonDecrypt = Button(botones, text="Descifrar", fg='red', command=pressDecrypt).pack(side='left', padx=10,
-                                                                                                 pady=30)
+    btonDecrypt = Button(botones, text="Descifrar", fg='red', command=pressDecrypt).pack(side='left', padx=10, pady=30)
+    botonUpdate = Button(botones, text="Actualizar", fg='blue', command=pressUpdate).pack(side='left', padx=10, pady=30)
     botonDelete = Button(botones, text="Eliminar", fg='red', command=pressDelete).pack(side='left', padx=10, pady=30)
     # b6 = Button(botones, text="Updatemysql ").pack(side='left', padx=10, pady=30)
     botones.pack(side='top')

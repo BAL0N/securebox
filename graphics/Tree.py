@@ -48,11 +48,13 @@ class Init:
             e = elemento[1:]
 
             if cryptBool(elemento[0]) == 1:
-                self.tree.insert('', 'end', text=elemento[0], values=e)
+                self.tree.insert('', 'end', text=elemento[0], values=e, tags=('file',))
             else:
-                self.tree.insert('', 'end', text=elemento[0], values=e)
+                self.tree.insert('', 'end', text=elemento[0], values=e, tags=('text',))
                 #hola = self.tree.insert('', 'end', text="Dir 3", values='↘')
                 #self.tree.insert(hola, 'end', text=" sub dir 3", values=("3A AGHJSG ASHJAG SJAHSG JAHSG AJHSG AJHSG AJHSAG SHJAG SHJAG JHA SHJAG SJA", " 3B"))
+            self.tree.tag_configure('file', background='#73F63B')
+            self.tree.tag_configure('text', background='#B0FA92')
 
             '''
             # Ajusta el ancho de la columna si fuera necesarioen función de la longitud del elemento

@@ -5,6 +5,8 @@ import getpass
 from code.Conector import getSesion
 from code.Conector import setSesion
 from code.Conector import setData
+from code.Conector import getDataById
+from code.Conector import updateData
 
 from graphics.Extra import Center
 from code.Objects import Sesion
@@ -96,11 +98,12 @@ class dialogSetSesion:
 
 
 class dialogSetData:
-    def __init__(self, sesion, padre, filename, file):
+    def __init__(self, sesion, padre, filename, file, id):
         self.padre = padre
         self.filename = filename
         self.file = file
         self.sesion = sesion
+        self.id = id
 
         self.ventana = Toplevel(padre)
         self.ventana.geometry('200x470')
@@ -111,15 +114,30 @@ class dialogSetData:
         self.ventana.bind('<Return>', self.pressAceptar)  # Al darle a INTRO se pulsará el botón Aceptar
         self.ventana.bind('<Escape>', self.pressCancelar)  # Al darle a ESC se pulsará el botón Cancelar
 
-        self.name = StringVar()
-        self.name.set(filename.split("/")[len(filename.split("/"))-1])
-        self.password = StringVar()
-        self.password.set(sesion.hash)
-        self.algorithm = StringVar()
-        self.algorithm.set('AES')
-        self.site = StringVar()
-        self.user = StringVar()
-        self.mail = StringVar()
+        if id is None:
+            self.name = StringVar()
+            self.name.set(filename.split("/")[len(filename.split("/")) - 1])
+            self.password = StringVar()
+            self.password.set(sesion.hash)
+            self.algorithm = StringVar()
+            self.algorithm.set('AES')
+            self.site = StringVar()
+            self.user = StringVar()
+            self.mail = StringVar()
+        else:
+            self.data = getDataById(sesion.id, id)
+            self.name = StringVar()
+            self.name.set(self.data[1])
+            self.password = StringVar()
+            self.password.set(sesion.hash)
+            self.algorithm = StringVar()
+            self.algorithm.set(self.data[3])
+            self.site = StringVar()
+            self.site.set(self.data[4])
+            self.user = StringVar()
+            self.user.set(self.data[5])
+            self.mail = StringVar()
+            self.mail.set(self.data[6])
 
         Label(self.ventana, text='Nombre').pack()
         self.nameEntry = Entry(self.ventana, text=self.name)
@@ -150,16 +168,28 @@ class dialogSetData:
         self.notes = Text(self.ventana, height=3)
         self.notes.pack(padx=15, pady=5)
 
+        if id is not None:
+            self.notes.insert(INSERT, self.data[7])
+
         botonAceptar = Button(self.ventana, text='Aceptar', command=self.pressAceptar).pack(pady=5)
         botonCancelar = Button(self.ventana, text='Cancelar', command=self.pressCancelar).pack(pady=5)
 
     def pressAceptar(self, event=None):
         if self.file is None:
-            d = dialogCryptPass(self.ventana, 'Contraseña o texto a cifrar')
-            self.ventana.wait_window(d.ventana)
-            setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
-                    self.notes.get(1.0, END), self.site.get(), self.user.get(), self.mail.get(), None,
-                    cryptInfo(self.sesion.hash, d.password.get()))
+            if self.id is None:
+                d = dialogCryptPass(self.ventana, 'Contraseña o texto a cifrar', '')
+                self.ventana.wait_window(d.ventana)
+                setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
+                        self.notes.get(1.0, END), self.site.get(), self.user.get(), self.mail.get(), None,
+                        cryptInfo(self.sesion.hash, d.password.get()))
+            else:
+                d = dialogCryptPass(self.ventana, 'Contraseña o texto a cifrar', 'default')
+                self.ventana.wait_window(d.ventana)
+                version = self.data[2] + 1
+
+                updateData(self.name.get(), version, self.algorithm.get(), self.password.get(), self.site.get(),
+                           self.user.get(), self.mail.get(), None, cryptInfo(self.sesion.hash, d.password.get()),
+                           self.notes.get(1.0, END), self.sesion.id, self.id)
         else:
             setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
                     self.notes.get(1.0, END), self.site.get(), self.user.get(), self.mail.get(), self.file, None)
@@ -171,7 +201,7 @@ class dialogSetData:
 
 
 class dialogCryptPass:
-    def __init__(self, padre, text):
+    def __init__(self, padre, text, password):
 
         self.ventana = Toplevel(padre)
         self.ventana.transient(padre)
@@ -181,6 +211,7 @@ class dialogCryptPass:
         self.ventana.bind('<Escape>', self.pressOk)  # Al darle a ESC se pulsará el botón Cancelar
 
         self.password = StringVar()
+        self.password.set(password)
 
         Label(self.ventana, text=text).pack()
         self.passwordEntry = Entry(self.ventana, text=self.password, show='·')
