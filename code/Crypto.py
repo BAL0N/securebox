@@ -16,7 +16,7 @@ mode = AES.MODE_CBC
 IV = 16 * '\x00'
 
 
-def cryptInfo(key, text):
+def cifrar(key, text):
     # Obtenemos los 32 primeros dígitos del hash como clave
     key = key[32:]
     # Transformamos el texto a cifrar para hacerlo múltiplo de 16
@@ -25,17 +25,13 @@ def cryptInfo(key, text):
     return encryptor.encrypt(text)
 
 
-def decryptInfo(key, crypted):
+def descifrar(key, crypted):
     key = key[32:]
     decryptor = AES.new(key, mode, IV=IV)
     return decryptor.decrypt(crypted).splitlines()[0].decode('ascii')
 
-
+'''
 def cifrar(clave, fichero):
-    '''Cifra un fichero con AES.
-       @param clave: la clave de cifrado
-       @param fichero: el fichero a cifrar
-    '''
     # Genera un hash de la clave introducida
     clave = get_clave(clave)
     # Tamaño del bloque a leer
@@ -76,10 +72,6 @@ def cifrar(clave, fichero):
 
 
 def descifrar(clave, fichero):
-    '''Descifra un fichero cifrado con AES.
-       @param clave: la clave de cifrado
-       @param fichero: la localización del fichero a descifrar
-    '''
     clave = get_clave(clave)
     bs = 1024
     ficheroSalida = fichero
@@ -98,8 +90,5 @@ def descifrar(clave, fichero):
                 salida.write(descifrador.decrypt(bloque))
 
 def get_clave(password):
-    ''' Genera un resumen sha-256 a partir de una cadena de texto
-        @param password: la cadena de texto
-        return: el resumen
-    '''
     return SHA256.new(password).digest()
+'''

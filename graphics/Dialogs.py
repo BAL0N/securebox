@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
 
 import getpass
 
@@ -10,8 +12,9 @@ from code.Conector import updateData
 
 from graphics.Extra import Center
 from code.Objects import Sesion
+from code.Objects import Secreto
 from code.Crypto import getHash
-from code.Crypto import cryptInfo
+from code.Crypto import cifrar
 from code.Generator import generatorClave
 
 
@@ -107,10 +110,9 @@ class dialogSetSesion:
 
 
 class dialogSetData:
-    def __init__(self, sesion, padre, filename, file, id):
+    def __init__(self, sesion, padre, filename, id):
         self.padre = padre
         self.filename = filename
-        self.file = file
         self.sesion = sesion
         self.id = id
 
@@ -183,16 +185,29 @@ class dialogSetData:
         botonAceptar = Button(self.ventana, text='Aceptar', command=self.pressAceptar).pack(pady=5)
         botonCancelar = Button(self.ventana, text='Cancelar', command=self.pressCancelar).pack(pady=5)
 
-    def pressAceptar(self, event=None):
+    def pressAceptar(self):
+        d = dialogCryptData(self.ventana, None)
+        self.ventana.wait_window(d.ventana)
+
+        if self.id is None:
+            secreto = d.secreto
+            setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
+                    secreto.file, cifrar(self.sesion.hash, secreto.password), cifrar(self.sesion.hash, secreto.info),
+                    self.site.get(), self.user.get(), self.mail.get(), self.notes.get(1.0, END))
+        else:
+            print('Actualizar archivo')
+
+
+        '''
         if self.file is None:
             if self.id is None:
-                d = dialogCryptPass(self.ventana, 'Contraseña o texto a cifrar', '')
+                d = dialogCryptData(self.ventana, 'Contraseña o texto a cifrar', '')
                 self.ventana.wait_window(d.ventana)
                 setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
                         self.notes.get(1.0, END), self.site.get(), self.user.get(), self.mail.get(), None,
                         cryptInfo(self.sesion.hash, d.password.get()))
             else:
-                d = dialogCryptPass(self.ventana, 'Contraseña o texto a cifrar', 'default')
+                d = dialogCryptData(self.ventana, 'Contraseña o texto a cifrar', 'default')
                 self.ventana.wait_window(d.ventana)
                 version = self.data[2] + 1
 
@@ -202,34 +217,72 @@ class dialogSetData:
         else:
             setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
                     self.notes.get(1.0, END), self.site.get(), self.user.get(), self.mail.get(), self.file, None)
-
+        '''
         self.ventana.destroy()
 
     def pressCancelar(self, event=None):
         self.ventana.destroy()
 
 
-class dialogCryptPass:
-    def __init__(self, padre, text, password):
+''' 
+ Diálogo de gestión de información secreta para cifrar
+'''
+class dialogCryptData:
+    def __init__(self, padre, secreto):
+        self.secreto = secreto
 
         self.ventana = Toplevel(padre)
         self.ventana.transient(padre)
         Center(self.ventana)
-
-        self.ventana.bind('<Return>', self.pressOk)  # Al darle a INTRO se pulsará el botón Aceptar
-        self.ventana.bind('<Escape>', self.pressOk)  # Al darle a ESC se pulsará el botón Cancelar
+        self.ventana.bind('<Return>', self.pressOk)
+        self.ventana.bind('<Escape>', self.pressOk)
 
         self.password = StringVar()
-        self.password.set(password)
+        self.f = IntVar()
+        self.p = IntVar()
+        self.file = None
 
-        Label(self.ventana, text=text).pack()
+        Label(self.ventana, text='Contraseña').pack()
         self.passwordEntry = Entry(self.ventana, text=self.password, show='·')
         self.passwordEntry.pack(padx=15, pady=5)
         self.passwordEntry.focus_set()
 
+        self.checkShowPassword = Checkbutton(self.ventana, text='Mostrar clave', variable=self.p, command=self.showPassword).pack()
+
+        Label(self.ventana, text='Información secreta').pack()
+        self.info = Text(self.ventana, height=3)
+        self.info.pack(padx=15, pady=5)
+
+        if secreto is not None:
+            self.password.set(secreto.password)
+            self.info.insert(END, secreto.info)
+            botonFile = Button(self.ventana, text='Descargar archivo', command=self.pressFile).pack(pady=5)
+        else:
+            self.checkFile = Checkbutton(self.ventana, text='Archivo adjunto', variable=self.f).pack()
+
         botonOk = Button(self.ventana, text='Ok', command=self.pressOk).pack(pady=5)
 
-    def pressOk(self, event=None):
+    def showPassword(self):
+        if self.p.get() == 0:
+            self.passwordEntry.config(show='·')
+        else:
+            self.passwordEntry.config(show='')
+    def pressFile(self):
+        carpeta = filedialog.askdirectory()
+        with open(carpeta + '/' + 'DESCIFRADO', 'wb') as f:
+            f.write(self.secreto.file)
+            messagebox.showinfo('Info', 'Archivo descifrado')
+
+    def pressOk(self):
+        if self.secreto is None:
+            self.secreto = Secreto(self.password.get(), self.info.get(1.0, END), None)
+
+            if self.f.get() == 1:
+                archivo = filedialog.askopenfile()
+                with open(archivo.name, 'rb') as f:
+                    #self.file = f.read()
+                    self.secreto.file = f.read()
+
         self.ventana.destroy()
 
 

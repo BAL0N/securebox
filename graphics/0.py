@@ -9,22 +9,23 @@ from tkinter import messagebox
 from graphics.Tree import Init
 
 from code.Objects import Sesion
+from code.Objects import Secreto
 from graphics.Extra import Center
 from graphics.Dialogs import dialogSesion
 from graphics.Dialogs import dialogSetData
-from graphics.Dialogs import dialogCryptPass
+from graphics.Dialogs import dialogCryptData
 #from graphics.Dialogs import dialogDecryptData
 
 from code.Conector import setData
-from code.Conector import getCryptData
-from code.Conector import getCryptInfo
+from code.Conector import getCryptedFile
+from code.Conector import getCryptedInfo
+from code.Conector import getCryptedPassword
 from code.Conector import getHashData
 from code.Conector import deleteData
 from code.Conector import cryptBool
 
 from code.Crypto import cifrar
 from code.Crypto import descifrar
-from code.Crypto import decryptInfo
 
 
 root = Tk()
@@ -41,19 +42,8 @@ if ss is not False:
     def treeRefresh():
         Init.treeRefresh(tree, ss.id)
 
-    def pressCryptFile():
-        archivo = filedialog.askopenfile()
-        with open(archivo.name, 'rb') as f: file = f.read()
-
-        #cifrar(b'\xbf\xc0\x85)\x10nc\x94\x02)j\xdf\xcb\xc4\x94\x9d(\x9e[EX\xc8\xd5\xbfI{\xa2$\x05(\xd5\x18', archivo.name)
-
-        # Envío el propiertario, el padre, el nombre de archivo y el archivo
-        d = dialogSetData(ss, root, archivo.name, file, None)
-        root.wait_window(d.ventana)
-        treeRefresh()
-
-    def pressCryptInfo():
-        d = dialogSetData(ss, root, '', None, None)
+    def pressCrypt():
+        d = dialogSetData(ss, root, '', None)
         root.wait_window(d.ventana)
         treeRefresh()
 
@@ -63,6 +53,14 @@ if ss is not False:
             id = tree.tree.item(selectedItem)['text']  # Obtenemos la id
             name = tree.tree.item(selectedItem)['values'][0]  # Obtenemos el nombre de archivo
 
+            # Construcción del objeto de secretos
+            secreto = Secreto(descifrar(
+                ss.hash, getCryptedPassword(id, name)),
+                descifrar(ss.hash, getCryptedInfo(id, name)),
+                getCryptedFile(id, name))
+            dialogCryptData(root, secreto)
+
+            '''
             if cryptBool(id):
                 datahashed = getHashData(id, name)
 
@@ -79,9 +77,9 @@ if ss is not False:
                 else:
                     messagebox.showerror('Error', 'Contraseña incorrecta')
             else:
-                decrypted = decryptInfo(ss.hash, getCryptInfo(id, name))
+                decrypted = descifrar(ss.hash, getCryptInfo(id, name))
                 messagebox.showinfo('Descifrado', 'Mensaje secreto:' + decrypted)
-
+            '''
         except IndexError:
             messagebox.showerror('Error', 'No ha seleccionado ningún elemento')
         except TypeError:
@@ -104,17 +102,13 @@ if ss is not False:
         treeRefresh()
 
     n = ttk.Notebook()
-    f_0 = Frame()
     f = Frame()
     tree = Init(f, ss)
     n.add(f, text='Información secreta de ' + ss.name.upper())
     n.pack(padx=10, pady=10)
 
     botones = Frame(root)
-    botonCryptFile = Button(botones, text="Cifrar archivo", fg='green', command=pressCryptFile).pack(side='left',
-                                                                                                     padx=10, pady=30)
-    botonCryptInfo = Button(botones, text="Cifrar info", fg='green', command=pressCryptInfo).pack(side='left', padx=10,
-                                                                                                  pady=30)
+    botonCrypt = Button(botones, text="Cifrar info", fg='green', command=pressCrypt).pack(side='left', padx=10, pady=30)
     btonDecrypt = Button(botones, text="Descifrar", fg='red', command=pressDecrypt).pack(side='left', padx=10, pady=30)
     botonUpdate = Button(botones, text="Actualizar", fg='blue', command=pressUpdate).pack(side='left', padx=10, pady=30)
     botonDelete = Button(botones, text="Eliminar", fg='red', command=pressDelete).pack(side='left', padx=10, pady=30)

@@ -40,12 +40,12 @@ def setSesion(name, password):
     cursor.close()
 
 
-def setData(name, algorithm, property, password, notes, site, username, mail, file, cryptpass):
-    args = (name, algorithm, property, password, notes, site, username, mail, file, cryptpass)
+def setData(name, algorithm, property, hash, cryptedfile, cryptedpassword, cryptedinfo, site, username, mail, notes):
+    args = (name, algorithm, property, hash, cryptedfile, cryptedpassword, cryptedinfo, site, username, mail, notes)
 
     cursor = c.cursor()
-    cursor.execute('insert into secrets(name,algorithm,property,hash,notes,site,username,mail,crypt,cryptpass) '
-                   'values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', args)
+    cursor.execute('insert into secrets(name, algorithm, property, hash, cryptedfile, cryptedpassword, cryptedinfo, site, username, mail, notes) '
+                   'values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', args)
     c.commit()
     cursor.close()
 
@@ -78,51 +78,6 @@ def updateData(name, version, algorithm, password, site, username, mail, file, c
     cursor.execute('update secrets set name=%s,version=%s,algorithm=%s,hash=%s,site=%s,username=%s,mail=%s,crypt=%s,cryptpass=%s,notes=%s where property=%s and id=%s ', args)
     cursor.close()
 
-
-def cryptBool(id):
-    cursor = c.cursor()
-    args = (id, id)
-    cursor.execute('select count(crypt) from secrets where id=%s and id=%s', args)
-    data = cursor.fetchone()[0]
-    return data
-
-    cursor.close()
-
-
-def getCryptData(id, name):
-    sql = "select crypt from secrets where id=%s and name=%s"
-    args = (id, name)
-
-    cursor = c.cursor()
-    cursor.execute(sql, args)
-
-    data = cursor.fetchone()[0]
-    return data
-
-    cursor.close()
-
-
-def getCryptInfo(id, name):
-    sql = "select cryptpass from secrets where id=%s and name=%s"
-    args = (id, name)
-
-    cursor = c.cursor()
-    cursor.execute(sql, args)
-
-    data = cursor.fetchone()[0]
-    return data
-
-    cursor.close()
-
-
-def getHashData(id, name):
-    cursor = c.cursor()
-    cursor.execute('select hash from secrets where name=%s and id=%s', (name, id))
-    data = cursor.fetchone()
-    return data[0]
-    cursor.close()
-
-
 def deleteData(id, name):
     sql = "delete from secrets where id=%s and name=%s"
     args = (id, name)
@@ -130,6 +85,61 @@ def deleteData(id, name):
     cursor = c.cursor()
     cursor.execute(sql, args)
     c.commit()
+    cursor.close()
+
+def cryptBool(id):
+    cursor = c.cursor()
+    args = (id, id)
+    cursor.execute('select count(cryptedfile) from secrets where id=%s and id=%s', args)
+    data = cursor.fetchone()[0]
+    return data
+
+    cursor.close()
+
+
+def getCryptedFile(id, name):
+    sql = "select cryptedfile from secrets where id=%s and name=%s"
+    args = (id, name)
+
+    cursor = c.cursor()
+    cursor.execute(sql, args)
+
+    data = cursor.fetchone()[0]
+    return data
+
+    cursor.close()
+
+
+def getCryptedPassword(id, name):
+    sql = "select cryptedpassword from secrets where id=%s and name=%s"
+    args = (id, name)
+
+    cursor = c.cursor()
+    cursor.execute(sql, args)
+
+    data = cursor.fetchone()[0]
+    return data
+
+    cursor.close()
+
+
+def getCryptedInfo(id, name):
+    sql = "select cryptedinfo from secrets where id=%s and name=%s"
+    args = (id, name)
+
+    cursor = c.cursor()
+    cursor.execute(sql, args)
+
+    data = cursor.fetchone()[0]
+    return data
+
+    cursor.close()
+
+def getHashData(id, name):
+    cursor = c.cursor()
+    cursor.execute('select hash from secrets where name=%s and id=%s', (name, id))
+    data = cursor.fetchone()
+    return data[0]
     cursor.close()
 
 

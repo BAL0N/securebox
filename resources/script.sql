@@ -6,7 +6,6 @@ USE securebox ;
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
     id INT(11) NOT NULL AUTO_INCREMENT UNIQUE,
-    mail  VARCHAR(40),
     name VARCHAR(20) NOT NULL,
     hash VARCHAR(256) NOT NULL,
     PRIMARY KEY (id));
@@ -21,9 +20,9 @@ CREATE TABLE IF NOT EXISTS secrets (
     hash VARCHAR(256) NOT NULL,
     version FLOAT NOT NULL DEFAULT 1.0,
     -- validation VARCHAR(256) NOT NULL,
-    crypt longblob,
-
-    cryptpass blob,
+    cryptedfile longblob,
+    cryptedpassword blob,
+    cryptedinfo mediumblob,
     site VARCHAR(100) DEFAULT '',
     username VARCHAR(50) DEFAULT '',
     mail VARCHAR(100) DEFAULT '',
@@ -31,5 +30,5 @@ CREATE TABLE IF NOT EXISTS secrets (
     PRIMARY KEY (id),
     FOREIGN KEY (property) REFERENCES users(id));
 
-INSERT INTO users(mail,name,hash) values('mail@mail.com', 'javier', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
-INSERT INTO users(mail,name,hash) values('mail@mail.com', 'javier', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+INSERT INTO users(name,hash) values('javier', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+INSERT INTO users(name,hash) values('juan', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
