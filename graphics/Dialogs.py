@@ -185,7 +185,7 @@ class dialogSetData:
         botonAceptar = Button(self.ventana, text='Aceptar', command=self.pressAceptar).pack(pady=5)
         botonCancelar = Button(self.ventana, text='Cancelar', command=self.pressCancelar).pack(pady=5)
 
-    def pressAceptar(self):
+    def pressAceptar(self, event=None):
         d = dialogCryptData(self.ventana, None)
         self.ventana.wait_window(d.ventana)
 
@@ -273,7 +273,7 @@ class dialogCryptData:
             f.write(self.secreto.file)
             messagebox.showinfo('Info', 'Archivo descifrado')
 
-    def pressOk(self):
+    def pressOk(self, event=None):
         if self.secreto is None:
             self.secreto = Secreto(self.password.get(), self.info.get(1.0, END), None)
 

@@ -42,12 +42,12 @@ if ss is not False:
     def treeRefresh():
         Init.treeRefresh(tree, ss.id)
 
-    def pressCrypt():
+    def pressCrypt(event=None):
         d = dialogSetData(ss, root, '', None)
         root.wait_window(d.ventana)
         treeRefresh()
 
-    def pressDecrypt():
+    def pressDecrypt(event=None):
         try:
             selectedItem = tree.tree.focus()  # Obtenemos el foco
             id = tree.tree.item(selectedItem)['text']  # Obtenemos la id
@@ -86,7 +86,7 @@ if ss is not False:
             messagebox.showwarning('No decrypt', 'No decrypt')
         treeRefresh()
 
-    def pressUpdate():
+    def pressUpdate(event=None):
         selectedItem = tree.tree.focus()
         id = tree.tree.item(selectedItem)['text']
         name = tree.tree.item(selectedItem)['values'][0]
@@ -94,12 +94,25 @@ if ss is not False:
         root.wait_window(d.ventana)
         treeRefresh()
 
-    def pressDelete():
-        selectedItem = tree.tree.focus()
-        id = tree.tree.item(selectedItem)['text']
-        name = tree.tree.item(selectedItem)['values'][0]
-        deleteData(id, name)
-        treeRefresh()
+    def pressDelete(event=None):
+        try:
+            selectedItem = tree.tree.focus()
+            id = tree.tree.item(selectedItem)['text']
+            name = tree.tree.item(selectedItem)['values'][0]
+            deleteData(id, name)
+            treeRefresh()
+        except IndexError:
+            messagebox.showerror('Error', 'No ha seleccionado ningún elemento')
+
+    def pressExit(event=None):
+        root.destroy()
+
+    root.bind('<c>', pressCrypt)
+    root.bind('<d>', pressDecrypt)
+    root.bind('<Double-Button-1>', pressDecrypt)
+    root.bind('<Delete>', pressDelete)
+    root.bind('<u>', pressUpdate)
+    root.bind('<Escape>', pressExit)
 
     n = ttk.Notebook()
     f = Frame()
