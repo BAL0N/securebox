@@ -59,7 +59,7 @@ class dialogSesion:
             self.passEntry.config(show='')
 
     def pressAceptar(self, event=None):
-        self.sesion = getSesion(self.user.get(), self.password.get())
+        self.sesion = getSesion(self.user.get(), getHash(self.password.get()))
 
         if self.sesion:
             self.ventana.destroy()

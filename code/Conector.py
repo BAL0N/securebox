@@ -12,14 +12,13 @@ cred = {
 c = mysql.connector.connect(**cred)
 
 
-def getSesion(name, password):
-    hashedpass = getHash(password)
+def getSesion(name, hash):
     cursor = c.cursor(buffered=True)
-    cursor.execute('select id, name, hash, now() from users where name=%s and hash=%s', (name, hashedpass))
+    cursor.execute('select id, name, hash, now() from users where name=%s and hash=%s', (name, hash))
     data = cursor.fetchone()
 
     try:
-        if hashedpass == data[2]:
+        if hash == data[2]:
             sesion = Sesion(data[0], data[1], data[2], data[3])
             return sesion
     except TypeError:
