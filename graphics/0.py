@@ -10,7 +10,6 @@ from graphics.Tree import Init
 
 from code.Objects import Sesion
 from code.Objects import Secreto
-from graphics.Extra import Center
 from graphics.Dialogs import dialogSesion
 from graphics.Dialogs import dialogSetData
 from graphics.Dialogs import dialogCryptData
@@ -31,7 +30,6 @@ from code.Crypto import descifrar
 root = Tk()
 root.geometry('1000x400')
 root.title('securebox')
-Center(root)
 
 d = dialogSesion(root)
 root.wait_window(d.ventana)

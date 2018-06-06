@@ -10,7 +10,6 @@ from code.Conector import setData
 from code.Conector import getDataById
 from code.Conector import updateData
 
-from graphics.Extra import Center
 from code.Objects import Sesion
 from code.Objects import Secreto
 from code.Crypto import getHash
@@ -25,7 +24,6 @@ class dialogSesion:
         self.ventana = Toplevel(padre)
         self.ventana.geometry('200x250')
         self.ventana.transient(padre)
-        Center(self.ventana)
 
         self.ventana.title('Inicio de sesión')
         self.ventana.bind('<Return>', self.pressAceptar)  # Al darle a INTRO se pulsará el botón Aceptar
@@ -71,7 +69,6 @@ class dialogSetSesion:
 
         self.ventana = Toplevel(padre)
         self.ventana.transient(padre)
-        Center(self.ventana)
 
         self.ventana.title('Nuevo usuario')
         self.ventana.bind('<Return>', self.pressCreate)  # Al darle a INTRO se pulsará el botón Aceptar
@@ -119,7 +116,6 @@ class dialogSetData:
         self.ventana = Toplevel(padre)
         self.ventana.geometry('200x470')
         self.ventana.transient(padre)
-        Center(self.ventana)
 
         self.ventana.title('Cifrar')
         self.ventana.bind('<Return>', self.pressAceptar)  # Al darle a INTRO se pulsará el botón Aceptar
@@ -233,7 +229,6 @@ class dialogCryptData:
 
         self.ventana = Toplevel(padre)
         self.ventana.transient(padre)
-        Center(self.ventana)
         self.ventana.bind('<Return>', self.pressOk)
         self.ventana.bind('<Escape>', self.pressOk)
 
@@ -291,7 +286,6 @@ class dialogGenerator:
 
         self.ventana = Toplevel(padre)
         self.ventana.transient(padre)
-        Center(self.ventana)
 
         self.ventana.bind('<Return>', self.pressOk)
         self.ventana.bind('<Escape>', self.pressOk)
