@@ -1,30 +1,22 @@
-import tkinter
 from tkinter import Tk
 from tkinter import ttk
 from tkinter import Frame
 from tkinter import Button
-from tkinter import filedialog
 from tkinter import messagebox
 
 from graphics.Tree import Init
 
-from code.Objects import Sesion
-from code.Objects import Secreto
 from graphics.Dialogs import dialogSesion
 from graphics.Dialogs import dialogSetData
 from graphics.Dialogs import dialogCryptData
-#from graphics.Dialogs import dialogDecryptData
 
-from code.Conector import setData
 from code.Conector import getCryptedFile
 from code.Conector import getCryptedInfo
 from code.Conector import getCryptedPassword
-from code.Conector import getHashData
 from code.Conector import deleteData
-from code.Conector import cryptBool
 
-from code.Crypto import cifrar
 from code.Crypto import descifrar
+from code.Objects import Secreto
 
 
 root = Tk()
@@ -41,43 +33,22 @@ if ss is not False:
         Init.treeRefresh(tree, ss.id)
 
     def pressCrypt(event=None):
-        d = dialogSetData(ss, root, '', None)
+        d = dialogSetData(ss, root, None)
         root.wait_window(d.ventana)
         treeRefresh()
 
     def pressDecrypt(event=None):
         try:
-            selectedItem = tree.tree.focus()  # Obtenemos el foco
-            id = tree.tree.item(selectedItem)['text']  # Obtenemos la id
-            name = tree.tree.item(selectedItem)['values'][0]  # Obtenemos el nombre de archivo
+            selectedItem = tree.tree.focus()
+            id = tree.tree.item(selectedItem)['text']
+            name = tree.tree.item(selectedItem)['values'][0]
 
-            # Construcción del objeto de secretos
-            secreto = Secreto(descifrar(
-                ss.hash, getCryptedPassword(id, name)),
+            secreto = Secreto(
+                descifrar(ss.hash, getCryptedPassword(id, name)),
                 descifrar(ss.hash, getCryptedInfo(id, name)),
                 getCryptedFile(id, name))
             dialogCryptData(root, secreto)
 
-            '''
-            if cryptBool(id):
-                datahashed = getHashData(id, name)
-
-                def ok():
-                    carpeta = filedialog.askdirectory()  # Y la carpeta donde queremos descomprimir
-                    o = getCryptData(id, name)
-                    with open(carpeta + '/' + name, 'wb') as f:
-                        f.write(o)
-                        messagebox.showinfo('Info', 'Archivo descifrado')
-                        treeRefresh()
-
-                if datahashed == ss.hash:
-                    ok()
-                else:
-                    messagebox.showerror('Error', 'Contraseña incorrecta')
-            else:
-                decrypted = descifrar(ss.hash, getCryptInfo(id, name))
-                messagebox.showinfo('Descifrado', 'Mensaje secreto:' + decrypted)
-            '''
         except IndexError:
             messagebox.showerror('Error', 'No ha seleccionado ningún elemento')
         except TypeError:
@@ -87,8 +58,7 @@ if ss is not False:
     def pressUpdate(event=None):
         selectedItem = tree.tree.focus()
         id = tree.tree.item(selectedItem)['text']
-        name = tree.tree.item(selectedItem)['values'][0]
-        d = dialogSetData(ss, root, '', None, id)
+        d = dialogSetData(ss, root, id)
         root.wait_window(d.ventana)
         treeRefresh()
 
@@ -123,7 +93,6 @@ if ss is not False:
     btonDecrypt = Button(botones, text="Descifrar", fg='red', command=pressDecrypt).pack(side='left', padx=10, pady=30)
     botonUpdate = Button(botones, text="Actualizar", fg='blue', command=pressUpdate).pack(side='left', padx=10, pady=30)
     botonDelete = Button(botones, text="Eliminar", fg='red', command=pressDelete).pack(side='left', padx=10, pady=30)
-    # b6 = Button(botones, text="Updatemysql ").pack(side='left', padx=10, pady=30)
     botones.pack(side='top')
 
 root.mainloop()

@@ -13,6 +13,15 @@ class Init:
     def __init__(self, master, sesion):
         self.sesion = sesion
 
+        def ordenar(tree, columna, descendiente):
+            data = [(tree.set(child, columna), child) \
+                    for child in tree.get_children('')]
+            data.sort(reverse=descendiente)
+            for ix, item in enumerate(data):
+                tree.move(item[1], '', ix)
+
+            tree.heading(columna, command=lambda col=columna: ordenar(tree, col, int(not descendiente)))
+
         self.tree = ttk.Treeview(master, columns=self.cabecera, show='headings')
         self.tree.column(cabecera[0], width=130)
         self.tree.column(cabecera[1], width=60)
@@ -31,7 +40,7 @@ class Init:
 
         for col in self.cabecera:
             self.tree.heading(col, text=col.title(),
-                         command=lambda c=col: sortby(self.tree, c, 0))
+                         command=lambda c=col: ordenar(self.tree, c, 0))
 
         self.treeRefresh(sesion.id)
 
@@ -56,7 +65,9 @@ class Init:
             self.tree.tag_configure('file', background='#73F63B')
             self.tree.tag_configure('text', background='#B0FA92')
 
+
             '''
+            [DEPRECATED]
             # Ajusta el ancho de la columna si fuera necesarioen función de la longitud del elemento
             for ix, val in enumerate(e):
                 col_w = font.Font().measure(val)
