@@ -11,3 +11,4 @@ class Secreto:
         self.password = password
         self.info = info
         self.file = file
+

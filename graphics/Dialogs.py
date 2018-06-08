@@ -9,6 +9,7 @@ from code.Conector import setSesion
 from code.Conector import setData
 from code.Conector import getDataById
 from code.Conector import updateData
+from code.Conector import existUser
 
 from code.Objects import Sesion
 from code.Objects import Secreto
@@ -122,8 +123,11 @@ class dialogNewSesion:
         print(self.password.get())
 
     def pressCreate(self, event=None):
-        setSesion(self.name.get(), getHash(self.password.get()))
-        messagebox.showinfo('Usuario creado', 'Usuario creado correctamente')
+        if self.name.get() == '' or self.password.get() == '' or existUser(self.name.get()):
+            messagebox.showerror('Usuario no creado', 'No es posible crear el usuario')
+        else:
+            setSesion(self.name.get(), getHash(self.password.get()))
+            messagebox.showinfo('Usuario creado', 'Usuario creado correctamente')
         self.ventana.destroy()
 
     def pressCancelar(self, event=None):
@@ -223,12 +227,8 @@ class dialogSetData:
                 descifrar(self.sesion.hash, self.data[4]),
                 descifrar(self.sesion.hash, self.data[5]),
                 self.data[6])
-            print(secreto.password)
-            print(secreto.info)
-            print(secreto.file)
             d = dialogCryptData(self.ventana, secreto)
             self.ventana.wait_window(d.ventana)
-            print(d.secreto.password)
             updateData(self.name.get(), self.data[2] + 1, self.algorithm.get(), self.password.get(),
                        cifrar(self.sesion.hash, d.secreto.password), cifrar(self.sesion.hash, d.secreto.info), d.secreto.file,
                        self.site.get(), self.user.get(), self.mail.get(), self.notes.get(1.0, END), self.sesion.id, self.id)

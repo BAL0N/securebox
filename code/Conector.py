@@ -137,5 +137,15 @@ def getHashData(id, name):
     cursor.close()
 
 
+def existUser(name):
+    cursor = c.cursor()
+    cursor.execute('select count(*) from users where name=%s and name=%s', (name, name))
+    data = cursor.fetchone()
+    if data[0] == 1:
+        return True
+    else:
+        return False
+    cursor.close()
+
 c.close
 
