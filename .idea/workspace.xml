@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0b68e74-df93-445b-a23e-0c1b85c9da55" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/code/Conector.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/Conector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/Objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/0.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/0.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/Dialogs.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/Dialogs.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +18,8 @@
       <file leaf-file-name="0.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/graphics/0.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
+            <state relative-caret-position="990">
+              <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -30,8 +30,8 @@
       <file leaf-file-name="Dialogs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/graphics/Dialogs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="125" column="90" selection-start-line="125" selection-start-column="90" selection-end-line="125" selection-end-column="90" />
+            <state relative-caret-position="499">
+              <caret line="238" column="17" selection-start-line="219" selection-start-column="17" selection-end-line="238" selection-end-column="17" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -138,10 +138,10 @@
         <option value="$PROJECT_DIR$/resources/script.sql" />
         <option value="$PROJECT_DIR$/code/Crypto.py" />
         <option value="$PROJECT_DIR$/graphics/Extra.py" />
-        <option value="$PROJECT_DIR$/graphics/0.py" />
         <option value="$PROJECT_DIR$/graphics/Tree.py" />
         <option value="$PROJECT_DIR$/code/Objects.py" />
         <option value="$PROJECT_DIR$/code/Conector.py" />
+        <option value="$PROJECT_DIR$/graphics/0.py" />
         <option value="$PROJECT_DIR$/graphics/Dialogs.py" />
       </list>
     </option>
@@ -279,7 +279,7 @@
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32979852" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3995749" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39956093" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -670,16 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/graphics/0.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphics/Tree.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="37">
@@ -707,10 +697,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/graphics/0.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/graphics/Dialogs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="125" column="90" selection-start-line="125" selection-start-column="90" selection-end-line="125" selection-end-column="90" />
+        <state relative-caret-position="499">
+          <caret line="238" column="17" selection-start-line="219" selection-start-column="17" selection-end-line="238" selection-end-column="17" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

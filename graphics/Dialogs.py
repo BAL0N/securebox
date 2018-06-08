@@ -214,26 +214,29 @@ class dialogSetData:
         botonCancelar = Button(self.ventana, text='Cancelar', command=self.pressCancelar).pack(pady=5)
 
     def pressAceptar(self, event=None):
-        if self.id is None:
-            d = dialogCryptData(self.ventana, None)
-            self.ventana.wait_window(d.ventana)
-            secreto = d.secreto
+        if self.name.get() == '':
+            messagebox.showerror('No creado', 'El nombre no puede estar en blanco')
+        else:
+            if self.id is None:
+                d = dialogCryptData(self.ventana, None)
+                self.ventana.wait_window(d.ventana)
+                secreto = d.secreto
 
-            setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
+                setData(self.name.get(), self.algorithm.get(), self.sesion.id, self.password.get(),
                     secreto.file, cifrar(self.sesion.hash, secreto.password), cifrar(self.sesion.hash, secreto.info),
                     self.site.get(), self.user.get(), self.mail.get(), self.notes.get(1.0, END))
-        else:
-            secreto = Secreto(
-                descifrar(self.sesion.hash, self.data[4]),
-                descifrar(self.sesion.hash, self.data[5]),
-                self.data[6])
-            d = dialogCryptData(self.ventana, secreto)
-            self.ventana.wait_window(d.ventana)
-            updateData(self.name.get(), self.data[2] + 1, self.algorithm.get(), self.password.get(),
-                       cifrar(self.sesion.hash, d.secreto.password), cifrar(self.sesion.hash, d.secreto.info), d.secreto.file,
-                       self.site.get(), self.user.get(), self.mail.get(), self.notes.get(1.0, END), self.sesion.id, self.id)
+            else:
+                secreto = Secreto(
+                    descifrar(self.sesion.hash, self.data[4]),
+                    descifrar(self.sesion.hash, self.data[5]),
+                    self.data[6])
+                d = dialogCryptData(self.ventana, secreto)
+                self.ventana.wait_window(d.ventana)
+                updateData(self.name.get(), self.data[2] + 1, self.algorithm.get(), self.password.get(),
+                           cifrar(self.sesion.hash, d.secreto.password), cifrar(self.sesion.hash, d.secreto.info), d.secreto.file,
+                           self.site.get(), self.user.get(), self.mail.get(), self.notes.get(1.0, END), self.sesion.id, self.id)
 
-        self.ventana.destroy()
+            self.ventana.destroy()
 
     def pressCancelar(self, event=None):
         self.ventana.destroy()

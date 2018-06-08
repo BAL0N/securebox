@@ -56,10 +56,15 @@ if ss is not False:
         treeRefresh()
 
     def pressUpdate(event=None):
-        selectedItem = tree.tree.focus()
-        id = tree.tree.item(selectedItem)['text']
-        d = dialogSetData(ss, root, id)
-        root.wait_window(d.ventana)
+        try:
+            selectedItem = tree.tree.focus()
+            id = tree.tree.item(selectedItem)['text']
+            d = dialogSetData(ss, root, id)
+            root.wait_window(d.ventana)
+        except IndexError:
+            messagebox.showerror('Error', 'No ha seleccionado ningún elemento')
+        except TypeError:
+            messagebox.showerror('Error', 'No ha seleccionado ningún elemento')
         treeRefresh()
 
     def pressDelete(event=None):
