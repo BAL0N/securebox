@@ -94,7 +94,7 @@ if ss is not False:
     n.pack(padx=10, pady=10)
 
     botones = Frame(root)
-    botonCrypt = Button(botones, text="Cifrar info", fg='green', command=pressCrypt).pack(side='left', padx=10, pady=30)
+    botonCrypt = Button(botones, text="Cifrar", fg='green', command=pressCrypt).pack(side='left', padx=10, pady=30)
     btonDecrypt = Button(botones, text="Descifrar", fg='red', command=pressDecrypt).pack(side='left', padx=10, pady=30)
     botonUpdate = Button(botones, text="Actualizar", fg='blue', command=pressUpdate).pack(side='left', padx=10, pady=30)
     botonDelete = Button(botones, text="Eliminar", fg='red', command=pressDelete).pack(side='left', padx=10, pady=30)
