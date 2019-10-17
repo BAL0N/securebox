@@ -1,4 +1,4 @@
-![](/home/javier/Documentos/datos/doc/main.png)
+![](/home/javier/Documentos/doc/main.png)
 
 # 1. Estudio preliminar del problema
 
