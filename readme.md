@@ -30,11 +30,11 @@ Al igual que los archivos, las cadenas de texto permiten la gestión de informac
 
 El lenguaje de programación orientado a objetos Python, utilizado como base del sistema, crece en cuota de mercado a gran velocidad. Estimándose como uno de los lenguajes más utilizados en el futuro próximo de la tecnología, lo que asegura un continuo soporte y comunidad. Estos factores favorecen un amplio periodo en la línea temporal en el que esta aplicación podrá ser utilizada sin quedar obsoleta, algo a tener en cuenta en un mundo tecnológico tan mutable.
 
-![](/home/javier/Documentos/datos/doc/grafica_python_0.jpg)
+![](doc/grafica_python_0.jpg)
 
 Python se encuentra, de hecho, en uso constante en aplicaciones para la ciberseguridad, tratamiento de datos masivos, implementando con grandes resultado en el análisis de Big Data y minería de datos, programación científica y data science y, últimamente, implementando materia de IA (Inteligencia Artificial), Machine Learning, Deep Learning, etc.
 
-![](/home/javier/Documentos/datos/doc/grafica_python_1.png)
+![](doc/grafica_python_1.png)
 
 Para situar al lector, podemos observar aplicaciones conocidas que implementan, de una forma u otra, el lenguaje de programación Python; empresas y organizaciones científicas con tan amplio volumen y flujos de información como NASA, Nmag Computational Micromagnetic, National Geographic; grandes periódicos y mass media como The Washington Post, The New York Time o grandes redes sociales con miles de millones de usuarios como Instagram y Pinterest.
 
@@ -75,7 +75,7 @@ Securebox ha sido diseñado con tecnología multiplataforma Python 3.6 y la inte
 
 Tkinter a su vez permite funciona correctamente en los tres grandes sistemas operativos: GNU/Linux, Microsoft Windows y Mac OS X de forma eficiente y óptima. Esto se debe a que Tkinter utiliza el potencial lógico y gráfico de cada sistema para dibujar la interfaz. Adaptándose automáticamente al entorno tanto lógica como visualmente, ofreciendo así un sistema adaptado y multiplataforma, así como integrado visualmente en el entorno.
 
-![](/home/javier/Documentos/datos/doc/tkinter.png)
+![](doc/tkinter.png)
 
 No obstante, Securebox ha sido desarrollado en un sistema GNU/Linux en su distribución Arch Linux. Aprovechando así el potencial del sistema operativo y su magnífica integración con el lenguaje Python para realizar un desarrollo cómodo y eficaz. 
 
