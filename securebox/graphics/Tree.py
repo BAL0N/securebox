@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
-from code.Conector import getData
-from code.Conector import cryptBool
+from Conector import getData
+from Conector import cryptBool
 
 cabecera = ['Nombre', 'Versión', 'Cifrado', 'Sitio', 'Usuario', 'Mail', 'Notas']
 

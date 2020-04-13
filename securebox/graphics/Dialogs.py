@@ -4,19 +4,19 @@ from tkinter import messagebox
 
 import getpass
 
-from code.Conector import getSesion
-from code.Conector import setSesion
-from code.Conector import setData
-from code.Conector import getDataById
-from code.Conector import updateData
-from code.Conector import existUser
+from Conector import getSesion
+from Conector import setSesion
+from Conector import setData
+from Conector import getDataById
+from Conector import updateData
+from Conector import existUser
 
-from code.Objects import Sesion
-from code.Objects import Secreto
-from code.Crypto import getHash
-from code.Crypto import cifrar
-from code.Crypto import descifrar
-from code.Generator import generatorClave
+from Objects import Sesion
+from Objects import Secreto
+from Cryptos import getHash
+from Cryptos import cifrar
+from Cryptos import descifrar
+from Generator import generatorClave
 
 
 '''

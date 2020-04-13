@@ -4,19 +4,19 @@ from tkinter import Frame
 from tkinter import Button
 from tkinter import messagebox
 
-from graphics.Tree import Init
+from Tree import Init
 
-from graphics.Dialogs import dialogSesion
-from graphics.Dialogs import dialogSetData
-from graphics.Dialogs import dialogCryptData
+from Dialogs import dialogSesion
+from Dialogs import dialogSetData
+from Dialogs import dialogCryptData
 
-from code.Conector import getCryptedFile
-from code.Conector import getCryptedInfo
-from code.Conector import getCryptedPassword
-from code.Conector import deleteData
+from Conector import getCryptedFile
+from Conector import getCryptedInfo
+from Conector import getCryptedPassword
+from Conector import deleteData
 
-from code.Crypto import descifrar
-from code.Objects import Secreto
+from Cryptos import descifrar
+from Objects import Secreto
 
 
 root = Tk()
