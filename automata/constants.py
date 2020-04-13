@@ -1,8 +1,8 @@
 CREDENTIALS = {
-    'user': 'root',
-    'password': 'b6qeyugeh',
-    'host': 'localhost',
-    'database': 'automata'
+    'user': '$USER',
+    'password': '$PASSWORD',
+    'host': '$HOST',
+    'database': '$DATABASE'
 }
 
 SEPARATOR = '/'

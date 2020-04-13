@@ -1,14 +1,9 @@
 import mysql.connector
 
-from code.Crypto import getHash
-from code.Objects import Sesion
+from Cryptos import getHash
+from Objects import Sesion
+from credentials import cred
 
-cred = {
-    'user': 'root',
-    'password': 'b6qeyuge',
-    'host': 'localhost',
-    'database': 'securebox'
-}
 c = mysql.connector.connect(**cred)
 
 
